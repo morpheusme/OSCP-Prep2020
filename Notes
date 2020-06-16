@@ -1,5 +1,7 @@
 HTB Machines
 
+following @ippsec
+
 1. Swagshop
  nmap -sC -sV -oA nmap/swagshop ip 
 
