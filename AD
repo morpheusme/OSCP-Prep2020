@@ -1,0 +1,48 @@
+AD Enumeration
+
+Remote Desktop
+rdesktop 20.20.20.33 -u user@domain -p password -g 1024x768 -x 0x80
+
+net user  // enumerate local accounts
+net user /domain
+
+net user username /domain
+
+net group /domain 
+
+//powershell
+\\enumerate.ps1
+
+$domainobj = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+$PDC = ($domainObj.RdcRoleOwner).Name
+
+$SearchString += "LDAP://"
+
+$SearchString += $PDC+ "/"
+
+$DistinguishedName = "DC=$($domainObj.Name.Replace('.',',DC='))"
+
+$SearchString += $DistinguishedName
+
+$SearchString 
+
+$Searcher = New-Object System.DirectoryServices.DirectorySearcher([ADSI]$SearchString)
+
+$objDomain = New-Object System.DirectoryServices.DirectoryEntry
+
+$Searcher.SearchRoot = $objDomain
+
+$Searcher.filter="samAccountType=805306368"  //name = user for specific user
+
+$Result = $Searcher.FindAll()
+
+Foreach($obj in $Result)
+{
+ Foreach($prop in $obj.Properties)
+ {
+ $prop
+ }
+ Write-Host "------------"
+ 
+ }
+ 
