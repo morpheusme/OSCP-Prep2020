@@ -5,3 +5,6 @@ https://github.com/imfinedude/nmapAutomator
 
 
 http://0xc0ffee.io/blog/OSCP-Goldmine
+
+Guides
+https://www.absolomb.com/Guides/
