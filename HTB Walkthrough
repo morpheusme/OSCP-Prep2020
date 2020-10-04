@@ -88,5 +88,6 @@ $credential = Import-CliXml -Path U:\Users\app\user.txt
 $credential.GetNetworkCredential().Password
 
 
-
+X11 exploit
+https://zachgrace.com/training/x11/
 
