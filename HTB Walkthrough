@@ -110,4 +110,4 @@ true
 
 ssh -i id_rsa root@passage
 
-
+https://0xdf.gitlab.io/2019/07/20/htb-ctf.html
