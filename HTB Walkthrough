@@ -115,6 +115,10 @@ https://0xdf.gitlab.io/2019/07/20/htb-ctf.html
 
 https://snovvcrash.rocks/2019/09/20/htb-ctf.html
 
+
+
+curl -sv --stderr - 10.10.10.122 | grep Date; date
+
 touch '@me'; ln -sf /root/root.txt me; ls -la; date
 
 otp.py
